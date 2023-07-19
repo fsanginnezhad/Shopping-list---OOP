@@ -1,0 +1,53 @@
+{
+    "fruits": {
+        "apple": {
+            "price": 15000,
+            "number": 10,
+            "discount": 0
+        },
+        "banana": {
+            "price": 90000,
+            "number": 10,
+            "discount": 0
+        },
+        "mango": {
+            "price": 45000,
+            "number": 10,
+            "discount": 0
+        }
+    },
+    "drinks": {
+        "water": {
+            "price": 10000,
+            "number": 10,
+            "discount": 0
+        },
+        "soda": {
+            "price": 20000,
+            "number": 10,
+            "discount": 0
+        },
+        "wine": {
+            "price": 80000,
+            "number": 10,
+            "discount": 0
+        }
+    },
+    "foods": {
+        "spagetty": {
+            "price": 95000,
+            "number": 10,
+            "discount": 0
+        },
+        "pizza": {
+            "price": 110000,
+            "number": 10,
+            "discount": 0
+        },
+        "hotdog": {
+            "price": 80000,
+            "number": 10,
+            "discount": 0
+        }
+    }
+}
