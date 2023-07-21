@@ -1,5 +1,4 @@
-from models.models import App
-from objects.objects import group
+from objects.objects import app
 
 if __name__ == '__main__':
-    App.main(group)
+    app.main()

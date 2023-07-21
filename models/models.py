@@ -187,45 +187,41 @@ class Shopping_list(Basket):
             )
 
 
-class App:
-    @staticmethod
-    def clear_screen() -> None:
+class App(Group):
+    def clear_screen(self) -> None:
         os.system('cls' if os.name == 'nt' else 'clear')
 
-    @staticmethod
-    def keep() -> None:
+    def keep(self) -> None:
         getpass('Press ENTER to continue...')
 
-    @staticmethod
-    def admin_menu(group: Group):
+    def admin_menu(self):
         while True:
-            App.clear_screen()
+            self.clear_screen()
             print('Welcome to Admin Menu.')
-            valid = group.group_valid()
+            valid = super().group_valid()
             if valid:
                 message = 'Enter `Group` or `product` or `Show` or `Back`: '
             else:
                 message = 'Enter `Group` or `Back`: '
-            App.help_admin_group(valid)
+            self.help_admin_group(valid)
             command = input(message).casefold()
             if command in BACK_COMMANDS:
                 break
             elif command == 'group':
-                App.group_menu(group)
+                self.group_menu()
             elif valid:
                 if command == 'product':
-                    App.product_menu(group)
+                    self.product_menu()
                 elif command == 'show':
-                    print(group.show_groups_products())
-                    App.keep()
+                    print(super().show_groups_products())
+                    self.keep()
 
-    @staticmethod
-    def group_menu(group: Group) -> None:
+    def group_menu(self) -> None:
         while True:
-            App.clear_screen()
+            self.clear_screen()
             print('Welcome to Group Menu.')
-            valid = group.group_valid()
-            App.help_group_add(valid)
+            valid = super().group_valid()
+            self.help_group_add(valid)
             if valid:
                 message = 'Enter `Add` or `Show` or `Remove` or `Edit` or `Back`: '  # noqa E501
             else:
@@ -235,50 +231,49 @@ class App:
                 break
             elif command == 'add':
                 group_name = input('Enter your Name Group: ')
-                group.add_group(group_name)
+                super().add_group(group_name)
                 print(f'Successfully The `{group_name}` added to basket!')
-                App.keep()
+                self.keep()
             elif valid:
                 if command == 'show':
-                    print(group.show_groups())
-                    App.keep()
+                    print(super().show_groups())
+                    self.keep()
                 elif command == 'remove':
-                    print(group.show_groups())
+                    print(super().show_groups())
                     group_name = input('Enter your Name Group for Delete: ')
-                    group.deleted_group(group_name)
+                    super().deleted_group(group_name)
                     print(f'The `{group_name}` deleted from basket.')
-                    App.keep()
+                    self.keep()
                 elif command == 'edit':
-                    print(group.show_groups())
+                    print(super().show_groups())
                     group_name = input('Enter your Name Group for Edit: ')
                     new_group = input('Enter your New Name Group: ')
-                    group.edited_group(group_name, new_group)
+                    super().edited_group(group_name, new_group)
                     print(f'The `{group_name}` edited to `{new_group}`')
-                    App.keep()
+                    self.keep()
 
-    @staticmethod
-    def product_menu(group: Group) -> None:
+    def product_menu(self) -> None:
         while True:
-            App.clear_screen()
+            self.clear_screen()
             print('Welcome to Product Menu.')
-            valid = group.product_valid()
+            valid = super().product_valid()
             if valid:
                 message = 'Enter `Add` or `Show` or `Remove` or `Edit` or `Back`: '  # noqa E501
             else:
                 message = 'Enter `Add` or `Back`: '
-            App.help_product(valid)
+            self.help_product(valid)
             command = input(message).casefold()
             if command in BACK_COMMANDS:
                 break
             elif command == 'add':
-                print(group.show_groups())
+                print(super().show_groups())
                 group_name = input('Enter your Name Group: ')
-                print(group.show_products)
+                print(super().show_products)
                 product_name = input('Enter your Name Product: ')
                 price = input('How much is it: ')
                 number = input('How many of Product: ')
                 discount = input('Enter your discount for Product: ')
-                group.add_product(
+                super().add_product(
                     group_name,
                     product_name,
                     int(price),
@@ -287,41 +282,39 @@ class App:
                 print(
                     f'Excellent The `{product_name}` added to `{group_name}`!'
                 )
-                App.keep()
+                self.keep()
             elif valid:
                 if command == 'show':
-                    print(group.show_products())
-                    App.keep()
+                    print(super().show_products())
+                    self.keep()
                 elif command == 'remove':
-                    print(group.show_products())
+                    print(super().show_products())
                     product_name = input(
                         'Enter your Product Name for Delete: '
                     )
-                    group_name = group.get_group_by_product(product)
-                    group.deleted_product(group_name, product_name)
+                    group_name = super().get_group_by_product(product)
+                    super().deleted_product(group_name, product_name)
                     print(
                         f'The `{product_name}` deleted from `{group_name}`.'
                     )
-                    App.keep()
+                    self.keep()
                 elif command == 'edit':
-                    print(group.show_products())
+                    print(super().show_products())
                     product_name = input('Enter your Product Name for Edit: ')
-                    product = group.get_product(product_name)
-                    group_name = group.get_group_by_product(product)
+                    product = super().get_product(product_name)
+                    group_name = super().get_group_by_product(product)
                     new_product = input('Enter your New Product Name: ')
-                    group.edit_product(group_name, new_product, product)
+                    super().edit_product(group_name, new_product, product)
                     print(f'The `{product}` edited to `{new_product}`')
-                    App.keep()
+                    self.keep()
 
-    @staticmethod
-    def show_help() -> str:
+    def show_help(self) -> str:
         print('''
         1. Use "Admin" to add groups and products to the warehouse.
         2. Use the "Store" to buy products from the warehouse.
         ''')
 
-    @staticmethod
-    def help_admin_group(valid: bool) -> None:
+    def help_admin_group(self, valid: bool) -> None:
         if valid:
             print('''
             1. If you want to go to the groups menu, use "Group".
@@ -335,8 +328,7 @@ class App:
             2. If you want to go to the main menu, use "Back".
             ''')
 
-    @staticmethod
-    def help_group_add(valid: bool) -> None:
+    def help_group_add(self, valid: bool) -> None:
         if valid:
             print('''
             1. If you want to add grouping, use "Add".
@@ -351,8 +343,7 @@ class App:
             2. If you want to go to the previous menu, use "Back".
             ''')
 
-    @staticmethod
-    def help_product(valid: bool) -> None:
+    def help_product(self, valid: bool) -> None:
         if valid:
             print('''
             1. If you want to add products to the warehouse, use "Add".
@@ -442,16 +433,15 @@ class App:
     #     4. Use "Back" to return to the main menu.
     #     ''')
 
-    @staticmethod
-    def main(group: Group):
+    def main(self):
         while True:
-            App.clear_screen()
-            App.show_help()
+            self.clear_screen()
+            self.show_help()
             command = input('Enter `Admin` or `Store` or `Quit`: ').casefold()
             if command in EXIT_COMMANDS:
                 break
             elif command == 'admin':
-                App.admin_menu(group)
+                self.admin_menu()
                 # try:
                 #     App.admin_menu(group)
                 # except:
@@ -459,4 +449,4 @@ class App:
                 #     App.keep()
             elif command == 'store':
                 print('Loading...')
-                App.keep()
+                self.keep()

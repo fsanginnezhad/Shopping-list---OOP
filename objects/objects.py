@@ -1,7 +1,8 @@
 from models.models import (
     DataBaseJson,
     Basket,
-    Group
+    Group,
+    App
 )
 
 try:
@@ -11,3 +12,4 @@ except:
     basket_list = {}
 basket = Basket(basket_list)
 group = Group(basket.name)
+app = App(basket.name)
